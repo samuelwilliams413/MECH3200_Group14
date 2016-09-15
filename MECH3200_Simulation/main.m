@@ -17,9 +17,16 @@ Zdd = data.get('Zdd_out');
 
 hold off
 hold on
+
+fig = figure(1);
+
 r = 4;
 c = 1;
 a = [6.75 8 -0.14 -0.10];
+x = 250;
+y = 125;
+width = 750;
+height = 750;
 
 subplot(r, c, 1);
 plot(H)
@@ -28,16 +35,16 @@ title('Road Height');
 subplot(r, c, 2);
 plot(dis_F)
 title('Wheel Front Height');
-axis(a);
+%axis(a);
 
 subplot(r, c, 3);
 plot(dis_R)
 title('Wheel Rear Height');
-axis(a);
+%axis(a);
 
 subplot(r, c, 4);
 plot(T)
 title('Car axis Height');
 
-
+set(fig, 'Position', [x y width height])
 end

@@ -1,19 +1,3 @@
-% Simulate and animate quarter-car suspension model. Model used originally
-% for an optimization demonstration in ME 149, Engineering System Design
-% Optimization, a graduate course taught at Tufts University in the
-% Mechanical Engineering Department. A corresponding video is available at:
-% 
-% http://www.youtube.com/watch?v=_jKceIHn6tc
-%
-% The model is based on the electric vehicle design case study found in the
-% dissertation by James T. Allison:
-%
-% http://deepblue.lib.umich.edu/handle/2027.42/58449
-%
-% Author: James T. Allison, Assistant Professor, University of Illinois at
-% Urbana-Champaign
-% Date: 3/4/12
-
 close all
 % Clear workspace and set plotting flags
 clear;

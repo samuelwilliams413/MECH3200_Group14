@@ -1,10 +1,4 @@
 function plotsusp(x,road_x,road_z,curr_x,umf)
-% Plots quarter car suspension model at a single instant of time.
-%
-% Author: James T. Allison, Assistant Professor, University of Illinois at
-% Urbana-Champaign
-% Date: 3/4/12
-
 % Vehicle positions:
 z0 = x(1);          % road elevation
 z1 = x(2);          % unsprung mass cm deviation
@@ -72,8 +66,6 @@ for i = 1 : 1 : 2
     % Plot unsprung mass block
     x0t = [(offset(i));x0_t];
 
-    
-    
     wheelSize = 75;
     % Plot tire spring
     x0r = [(offset(i));x0_r];
