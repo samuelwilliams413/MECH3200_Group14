@@ -1,4 +1,4 @@
-function [] = old_vehicle_suspension_model(dis_R, dis_F)
+function [] = old_vehicle_suspension_model(dis_R, dis_F, Z, T, H)
 close all
 % Clear workspace and set plotting flags
 
@@ -63,16 +63,16 @@ if ploton1
     
     filename = 'testnew51.gif';
     
-    for i=1:length(dis_R)
-        multiplier = 3;
+    for i=1:length(dis_R.data)
+        multiplier = 1;
         groundOffset = 0.12;
         wheelOffset = 0.25;
-        pos_R = dis_R(i)*multiplier + groundOffset + wheelOffset;
-        pos_F = dis_F(i)*multiplier + groundOffset + wheelOffset;
-        pos_M = z2(i);
-        angle_M = 0;
+        pos_R = dis_R.data(i)*multiplier;
+        pos_F = dis_F.data(i)*multiplier;
+        pos_M = Z.data(i)*multiplier;
+        angle_M = T.data(i)*multiplier*10000;
         road = z0(i);
-        plot_suspension([road, pos_R, pos_F, pos_M, angle_M, t(i)],road_x,road_z,x(i),umf);
+        plot_suspension([road, pos_R, pos_F, pos_M, angle_M, t(i)],road_x,road_z,x(i),umf,H);
         drawnow
         
         

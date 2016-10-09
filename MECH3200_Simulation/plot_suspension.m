@@ -1,10 +1,10 @@
-function plot_suspension(x,road_x,road_z,curr_x,umf)
+function plot_suspension(x,road_x,road_z,curr_x,umf,H)
 % Vehicle positions:
 z0 = x(1);          % road elevation
 z1_front = x(2);
 z1_rear = x(3);
 z2 = x(4);          % sprung mass cm deviation
-angle  = x(5);
+angle = x(5);
 t = x(6);           % current time
 
 % Geometric suspension parameters:
@@ -41,26 +41,37 @@ L2_R = x0_b-x0_s_R;     % suspension spring length
 text(fw/2,1.4,[num2str(t,'%2.1f') ' sec']);
 
 % Plot road profile
-dx = road_x(2) - road_x(1);
-xstart = max([curr_x-fw,0]);
-[~,istart] = min(abs(xstart-road_x));
-xend = curr_x + fw;
-[~,iend] = min(abs(xend-road_x));
-xpstart = xstart-curr_x;
-xpend = fw;
-zp = road_z(istart:iend)*umf;
-xp = xpstart:dx:xpend;
-maxi = min([length(xp),length(zp)]);
+% dx = road_x(2) - road_x(1);
+% xstart = max([curr_x-fw,0]);
+% [~,istart] = min(abs(xstart-road_x));
+% xend = curr_x + fw;
+% [~,iend] = min(abs(xend-road_x));
+% xpstart = xstart-curr_x;
+% xpend = fw;
+% zp = road_z(istart:iend)*umf;
+% xp = xpstart:dx:xpend;
+% maxi = min([length(xp),length(zp)]);
 figure(1);clf
-plot(xp(1:maxi),zp(1:maxi),'k-'); hold on
-screenSize = 0.75;
-    axis([-screenSize screenSize -0.75 3.5]);
 
-   axis([-screenSize screenSize -0.25 1.5]);  
+frame = 100;
+time = t/0.005;
+if(time > frame)
+    t1 = floor(time-frame);
+    t2 = floor(time+frame);
+    t1 = 50;
+    t2 = 150;
+    toPlot = 1000*H.data(t1:t2) + 0.13;
+    plot(1:length(toPlot), toPlot);
+end
+% plot(xp(1:maxi),zp(1:maxi),'k-');
+hold on
+screenSize = 0.75;
+axis([-1.5 1.5 -1.5  1.5]);
+
+axis([-screenSize screenSize -0.25 1.5]);
 offset = [-0.3,0.3];
-angle = 15;
+
 l = abs(offset(1) - offset(2))/2;
-R = sqrt(offset(2)^2 + h4^2);
 % Plot sprung mass block
 x0b = [0;x0_b];
 x1b = x0b + [-w2/2;0];
@@ -78,21 +89,22 @@ x4b(1) = x4b(1) + offset(2);    %bottom right
 % plot(0,x0b(2) - 0.5*h4  ,'gx')
 % plot(offset(1),x0b(2)  ,'ro')
 % plot(offset(2),x0b(2)  ,'ro')
-% 
-% ax1b = atand((x1b(2) - )/x1b(1)) + angle;
-% ax2b = atand(x2b(2)/x2b(1)) + angle;
-% ax3b = atand(x3b(2)/x3b(1)) + angle;
-% ax4b = atand(x4b(2)/x4b(1)) + angle;
-% 
-% x1b(1) = R*cosd(ax1b);
-% x2b(1) = R*cosd(ax2b);
-% x3b(1) = R*cosd(ax3b);
-% x4b(1) = R*cosd(ax4b);
-% 
-% x1b(2) = x0b(2) + R*sind(ax1b);
-% x2b(2) = x0b(2)   + R*sind(ax2b);
-% x3b(2) = x0b(2)  +  R*sind(ax3b);
-% x4b(2) = x0b(2)   + R*sind(ax4b);
+cp=0.5*(x1b(2)+ x2b(2));
+R = sqrt((x1b(1))^2 + (x1b(2)-cp)^2);
+ax1b = atand((x1b(2) - cp)/x1b(1)) + 180 + angle;
+ax2b = atand((x2b(2) - cp)/x2b(1)) + 180 + angle;
+ax3b = atand((x3b(2) - cp)/x3b(1)) + angle;
+ax4b = atand((x4b(2) - cp)/x4b(1)) + angle;
+
+x1b(1) = R*cosd(ax1b);
+x2b(1) = R*cosd(ax2b);
+x3b(1) = R*cosd(ax3b);
+x4b(1) = R*cosd(ax4b);
+
+x1b(2) = cp + R*sind(ax1b);
+x2b(2) = cp   + R*sind(ax2b);
+x3b(2) = cp  +  R*sind(ax3b);
+x4b(2) = cp   + R*sind(ax4b);
 
 
 

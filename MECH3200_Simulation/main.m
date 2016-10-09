@@ -2,6 +2,13 @@ function [] = main()
 
 clear all
 close all
+
+duration = 0.1;
+amplitude = 0.1;
+delay = 0.025;
+startTime = 1;
+
+
 vehicle_suspension_model
 data = sim('vehicle_suspension_model','SimulationMode','normal');
 close all
@@ -47,4 +54,5 @@ plot(T)
 title('Car axis Height');
 
 set(fig, 'Position', [x y width height])
+
 end
